@@ -25,16 +25,20 @@ function createAircraftIconHtml(aircraft: Aircraft, isSelected: boolean): string
   const isGround = aircraft.onGround;
   const isEstimated = aircraft.isEstimated;
 
-  // Monochrome tactical styling
-  let color = '#FFFFFF';
-  if (isGround) {
-    color = '#888888';
-  } else if (aircraft.freshness === 'stale') {
-    color = '#555555';
-  } else if (aircraft.freshness === 'aging') {
-    color = '#AAAAAA';
-  }
+  // Tactical floating callsign pill when selected
+  const floatingLabel = isSelected ? `
+    <div class="aircraft-floating-label">
+      <span>${aircraft.callsign}</span>
+      ${isGround ? '<span class="badge-gnd">GND</span>' : `<span class="text-neutral-400 font-normal">${aircraft.baroAltitude ? `${Math.round(aircraft.baroAltitude)}m` : 'ALT N/A'}</span>`}
+    </div>
+  ` : '';
 
+  // Expanding radar ping wave when selected
+  const locatorPulse = isSelected ? `
+    <div class="aircraft-locator-pulse"></div>
+  ` : '';
+
+  // Rotating crosshair reticle when selected
   const selectionReticle = isSelected ? `
     <div class="aircraft-selection-ring"></div>
     <div class="aircraft-target-reticle">
@@ -48,8 +52,35 @@ function createAircraftIconHtml(aircraft: Aircraft, isSelected: boolean): string
     <div class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-white border border-black animate-ping"></div>
   ` : '';
 
+  // Distinct high-contrast ground airport vehicle / taxi marker
+  if (isGround) {
+    return `
+      <div class="aircraft-marker-container ${isSelected ? 'aircraft-marker-selected' : ''}" style="width: 32px; height: 32px;">
+        ${floatingLabel}
+        ${locatorPulse}
+        ${selectionReticle}
+        <div class="ground-aircraft-beacon" style="transform: rotate(${heading}deg);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#FFFFFF">
+            <!-- Sleek Top-down Jet Silhouette for Ground Taxiing -->
+            <path d="M12 2L13.8 8.5L21.5 13.5V15.5L13.5 13L13.2 19L16 21.2V22.5L12 21.5L8 22.5V21.2L10.8 19L10.5 13L2.5 15.5V13.5L10.2 8.5L12 2Z" />
+          </svg>
+        </div>
+      </div>
+    `;
+  }
+
+  // Airborne flight marker
+  let color = '#FFFFFF';
+  if (aircraft.freshness === 'stale') {
+    color = '#71717A';
+  } else if (aircraft.freshness === 'aging') {
+    color = '#A1A1AA';
+  }
+
   return `
     <div class="aircraft-marker-container ${isSelected ? 'aircraft-marker-selected' : ''}" style="width: 32px; height: 32px;">
+      ${floatingLabel}
+      ${locatorPulse}
       ${selectionReticle}
       ${estimatedIndicator}
       <div style="transform: rotate(${heading}deg); transition: transform 0.3s ease;">
@@ -175,6 +206,9 @@ export const AirspaceMap: React.FC = () => {
 
     // Apply active filters to decide which aircraft to display
     const filteredAircraft = Object.values(aircraftMap).filter((ac) => {
+      // The currently selected aircraft is ALWAYS visible on the map
+      if (ac.icao24 === selectedIcao24) return true;
+
       // Callsign / ICAO filter
       if (filters.query) {
         const q = filters.query.toLowerCase().trim();
@@ -209,7 +243,7 @@ export const AirspaceMap: React.FC = () => {
     filteredAircraft.forEach((ac) => {
       currentIcaoSet.add(ac.icao24);
       const isSelected = ac.icao24 === selectedIcao24;
-      const iconKey = `${isSelected ? 1 : 0}_${Math.round((ac.heading ?? 0) / 2) * 2}_${ac.onGround ? 1 : 0}_${ac.freshness}`;
+      const iconKey = `${isSelected ? 1 : 0}_${Math.round((ac.heading ?? 0) / 2) * 2}_${ac.onGround ? 1 : 0}_${ac.freshness}_${ac.callsign}`;
 
       let marker = existingMarkers.get(ac.icao24);
 
@@ -233,7 +267,7 @@ export const AirspaceMap: React.FC = () => {
           (marker as any)._iconKey = iconKey;
         }
 
-        marker.setZIndexOffset(isSelected ? 1000 : (ac.onGround ? 10 : 100));
+        marker.setZIndexOffset(isSelected ? 10000 : (ac.onGround ? 250 : 100));
       } else {
         // Create new marker
         const html = createAircraftIconHtml(ac, isSelected);
@@ -246,7 +280,7 @@ export const AirspaceMap: React.FC = () => {
 
         marker = L.marker([ac.lat, ac.lon], {
           icon: customIcon,
-          zIndexOffset: isSelected ? 1000 : (ac.onGround ? 10 : 100)
+          zIndexOffset: isSelected ? 10000 : (ac.onGround ? 250 : 100)
         });
         (marker as any)._iconKey = iconKey;
 
@@ -299,8 +333,16 @@ export const AirspaceMap: React.FC = () => {
 
     const selectedAc = aircraftMap[selectedIcao24];
     if (selectedAc) {
-      // Pan to selected aircraft smoothly
-      map.panTo([selectedAc.lat, selectedAc.lon], { animate: true, duration: 0.8 });
+      // Pan and zoom to selected aircraft smoothly
+      const currentZoom = map.getZoom();
+      // On-ground aircraft are parked / taxiing at airports: zoom in to airport level (zoom 13+) so they are unmistakably separated and visible!
+      const minRequiredZoom = selectedAc.onGround ? 13 : 9;
+      const targetZoom = Math.max(currentZoom, minRequiredZoom);
+
+      map.flyTo([selectedAc.lat, selectedAc.lon], targetZoom, {
+        animate: true,
+        duration: 0.9
+      });
 
       // Draw flight movement trail if points exist
       const trail = flightTrails[selectedIcao24];
