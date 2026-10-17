@@ -488,6 +488,12 @@ export const useAirspaceStore = create<AirspaceState>((set, get) => ({
         }
       }));
     } catch (err: any) {
+      // If request was aborted or superseded by a newer one, ignore it cleanly
+      if (err?.message === 'Request aborted' || err?.message === 'Superseded by newer request') {
+        set({ isLoading: false });
+        return;
+      }
+
       const nowMs = Date.now();
       const isRateLimit = err?.status === 429;
       const errorMsg = err?.message || 'Network request failed';
@@ -495,9 +501,19 @@ export const useAirspaceStore = create<AirspaceState>((set, get) => ({
       // Fallback: check cache for recovery
       const cached = openskyService.getCachedSnapshot(selectedRegion.id);
 
+      // Baseline traffic fallback if the store has no aircraft yet
+      let fallbackMap: Record<string, Aircraft> = {};
+      if (Object.keys(get().aircraftMap).length === 0) {
+        const demoList = getDemoAircraft(selectedRegion.id);
+        demoList.forEach((ac) => {
+          fallbackMap[ac.icao24] = ac;
+        });
+      }
+
       set((state) => ({
         isLoading: false,
-        dataMode: cached ? 'DELAYED' : 'OFFLINE',
+        dataMode: cached ? 'DELAYED' : (Object.keys(state.aircraftMap).length > 0 ? 'OFFLINE' : 'DEMO'),
+        aircraftMap: Object.keys(state.aircraftMap).length > 0 ? state.aircraftMap : fallbackMap,
         lastErrorMessage: errorMsg,
         secondsUntilNextPoll: isRateLimit ? 30 : 15,
         diagnostics: {

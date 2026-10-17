@@ -36,7 +36,7 @@ class OpenSkyService {
     this.activeAbortController = abortController;
     const thisRequestId = ++this.currentRequestId;
 
-    const timeout = options.timeoutMs ?? 10000;
+    const timeout = options.timeoutMs ?? 18000;
     const timeoutId = setTimeout(() => {
       abortController.abort();
     }, timeout);
