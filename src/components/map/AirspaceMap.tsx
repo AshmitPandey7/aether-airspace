@@ -12,9 +12,10 @@ import { useAirspaceStore } from '../../store/useAirspaceStore';
 import type { Aircraft } from '../../types';
 import { formatAltitude, formatVelocity } from '../../utils/formatters';
 
-// CartoDB Dark Matter basemap URL and attribution
-const TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+// ESRI World Dark Gray Canvas (high contrast, tactical dark aerospace basemap, no API key required)
+const TILE_BASE_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+const TILE_REF_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}';
+const ATTRIBUTION = 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ';
 
 /**
  * Generates the HTML string for an aircraft marker DivIcon
@@ -101,11 +102,15 @@ export const AirspaceMap: React.FC = () => {
       attributionControl: true
     });
 
-    // Dark Matter tile layer
-    L.tileLayer(TILE_URL, {
-      subdomains: 'abcd',
-      maxZoom: 19,
+    // ESRI Dark Gray Base & Reference layers
+    L.tileLayer(TILE_BASE_URL, {
+      maxZoom: 16,
       attribution: ATTRIBUTION
+    }).addTo(map);
+
+    L.tileLayer(TILE_REF_URL, {
+      maxZoom: 16,
+      opacity: 0.65
     }).addTo(map);
 
     const markersGroup = L.featureGroup().addTo(map);

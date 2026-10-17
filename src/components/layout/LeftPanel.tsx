@@ -14,7 +14,8 @@ export const LeftPanel: React.FC = () => {
     aircraftMap,
     selectedRegion,
     setSelectedRegion,
-    lastErrorMessage
+    lastErrorMessage,
+    setDataMode
   } = useAirspaceStore();
 
   const [isBboxEditorOpen, setIsBboxEditorOpen] = useState(false);
@@ -162,9 +163,17 @@ export const LeftPanel: React.FC = () => {
 
         {/* Error Notice if any */}
         {lastErrorMessage && (
-          <div className="mt-2 p-2 rounded bg-rose-950/50 border border-rose-500/40 text-[10px] font-mono text-rose-300 flex items-start gap-1.5">
-            <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-rose-400" />
-            <span className="leading-tight">{lastErrorMessage}</span>
+          <div className="mt-2 p-2 rounded bg-rose-950/50 border border-rose-500/40 text-[10px] font-mono text-rose-300 space-y-1.5">
+            <div className="flex items-start gap-1.5">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-rose-400" />
+              <span className="leading-tight">{lastErrorMessage}</span>
+            </div>
+            <button
+              onClick={() => setDataMode('DEMO')}
+              className="w-full py-1 rounded bg-[#131F30] hover:bg-[#1C2A3E] border border-[#55DDF5]/40 text-[#55DDF5] font-semibold text-center cursor-pointer transition-colors"
+            >
+              SWITCH TO DEMO SIMULATION
+            </button>
           </div>
         )}
       </div>

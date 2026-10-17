@@ -43,8 +43,15 @@ class OpenSkyService {
 
     const startTime = performance.now();
 
-    // Construct URL with bounding box
-    const url = new URL('https://opensky-network.org/api/states/all');
+    // Use local proxy during dev/localhost to prevent browser CORS blocks
+    const isLocalhost = typeof window !== 'undefined' && 
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+    const baseUrl = isLocalhost
+      ? `${window.location.origin}/api/opensky/api/states/all`
+      : 'https://opensky-network.org/api/states/all';
+
+    const url = new URL(baseUrl);
     url.searchParams.set('lamin', region.lamin.toFixed(4));
     url.searchParams.set('lamax', region.lamax.toFixed(4));
     url.searchParams.set('lomin', region.lomin.toFixed(4));
