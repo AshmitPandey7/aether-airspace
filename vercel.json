@@ -4,6 +4,10 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/api/opensky/api/states/all",
+      "destination": "/api/proxy"
+    },
+    {
       "source": "/api/opensky/(.*)",
       "destination": "https://opensky-network.org/$1"
     },
@@ -13,6 +17,19 @@
     }
   ],
   "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, OPTIONS"
+        }
+      ]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [

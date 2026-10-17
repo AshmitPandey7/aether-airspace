@@ -43,13 +43,10 @@ class OpenSkyService {
 
     const startTime = performance.now();
 
-    // Use local proxy during dev/localhost to prevent browser CORS blocks
-    const isLocalhost = typeof window !== 'undefined' && 
-      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-
-    const baseUrl = isLocalhost
-      ? `${window.location.origin}/api/opensky/api/states/all`
-      : 'https://opensky-network.org/api/states/all';
+    // In all environments, route through the proxy endpoint to prevent CORS blocks:
+    // - In local Vite dev: proxied by vite.config.ts to https://opensky-network.org
+    // - In production (Vercel): proxied by /api/proxy serverless function with CORS headers
+    const baseUrl = `${window.location.origin}/api/opensky/api/states/all`;
 
     const url = new URL(baseUrl);
     url.searchParams.set('lamin', region.lamin.toFixed(4));
