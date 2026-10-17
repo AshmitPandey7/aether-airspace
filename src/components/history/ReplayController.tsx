@@ -47,15 +47,15 @@ export const ReplayController: React.FC = () => {
   const currentSample = trail[replayTimeIndex] || trail[trail.length - 1];
 
   return (
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 w-11/12 max-w-2xl bg-[#0E1624]/95 border border-[#294262] rounded-lg shadow-2xl backdrop-blur-md p-4 text-xs font-mono">
+    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 w-11/12 max-w-2xl bg-black/95 border border-[#222222] rounded-lg shadow-2xl backdrop-blur-md p-4 text-xs font-mono">
       {/* Header */}
-      <div className="flex items-center justify-between pb-2 border-b border-[#1C2A3E] mb-3">
+      <div className="flex items-center justify-between pb-2 border-b border-[#222222] mb-3">
         <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-[#55DDF5]" />
+          <Clock className="w-4 h-4 text-white" />
           <span className="font-bold text-white uppercase tracking-wider">
             FLIGHT REPLAY: {selectedAc ? `${selectedAc.callsign} (${selectedAc.icao24.toUpperCase()})` : 'ALL TRACKED TARGETS'}
           </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#131F30] text-[#55DDF5]">
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#141414] text-white border border-[#222222]">
             {trail.length} SAMPLES
           </span>
         </div>
@@ -64,14 +64,14 @@ export const ReplayController: React.FC = () => {
             setIsReplayActive(false);
             setIsReplayPlaying(false);
           }}
-          className="p-1 text-[#8293AA] hover:text-white rounded cursor-pointer"
+          className="p-1 text-neutral-400 hover:text-white rounded cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
       {trail.length === 0 ? (
-        <div className="py-4 text-center text-[#53647B]">
+        <div className="py-4 text-center text-neutral-500">
           No recorded movement history for this target yet. Keep surveillance active to collect observations.
         </div>
       ) : (
@@ -84,11 +84,11 @@ export const ReplayController: React.FC = () => {
               max={maxIndex}
               value={replayTimeIndex}
               onChange={(e) => setReplayTimeIndex(parseInt(e.target.value, 10))}
-              className="w-full h-1.5 bg-[#131F30] rounded-lg appearance-none cursor-pointer accent-[#55DDF5]"
+              className="w-full h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-white"
             />
-            <div className="flex justify-between text-[10px] text-[#8293AA]">
+            <div className="flex justify-between text-[10px] text-neutral-400">
               <span>T0: {new Date(trail[0].timestamp * 1000).toLocaleTimeString()}</span>
-              <span className="text-[#55DDF5] font-semibold">
+              <span className="text-white font-semibold">
                 Fix {replayTimeIndex + 1} of {trail.length} ({currentSample ? new Date(currentSample.timestamp * 1000).toLocaleTimeString() : ''})
               </span>
               <span>NOW: {new Date(trail[maxIndex].timestamp * 1000).toLocaleTimeString()}</span>
@@ -100,7 +100,7 @@ export const ReplayController: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setReplayTimeIndex(Math.max(0, replayTimeIndex - 1))}
-                className="p-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] text-[#8293AA] hover:text-white"
+                className="p-1.5 rounded bg-[#0A0A0A] hover:bg-[#1A1A1A] border border-[#222222] text-neutral-400 hover:text-white"
                 title="Step Back"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -108,7 +108,7 @@ export const ReplayController: React.FC = () => {
 
               <button
                 onClick={() => setIsReplayPlaying(!isReplayPlaying)}
-                className="px-3 py-1.5 rounded bg-[#55DDF5] text-[#080D16] font-bold hover:bg-[#55DDF5]/90 flex items-center gap-1.5 cursor-pointer shadow-[0_0_12px_rgba(85,221,245,0.3)]"
+                className="px-3 py-1.5 rounded bg-white text-black font-bold hover:bg-neutral-200 flex items-center gap-1.5 cursor-pointer shadow-md"
               >
                 {isReplayPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                 <span>{isReplayPlaying ? 'PAUSE' : 'PLAY'}</span>
@@ -116,22 +116,22 @@ export const ReplayController: React.FC = () => {
 
               <button
                 onClick={() => setReplayTimeIndex(Math.min(maxIndex, replayTimeIndex + 1))}
-                className="p-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] text-[#8293AA] hover:text-white"
+                className="p-1.5 rounded bg-[#0A0A0A] hover:bg-[#1A1A1A] border border-[#222222] text-neutral-400 hover:text-white"
                 title="Step Forward"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
 
               {/* Speed Buttons */}
-              <div className="flex items-center gap-1 ml-2 bg-[#131F30] p-0.5 rounded border border-[#1C2A3E]">
+              <div className="flex items-center gap-1 ml-2 bg-[#0A0A0A] p-0.5 rounded border border-[#222222]">
                 {[1, 2, 5].map((spd) => (
                   <button
                     key={spd}
                     onClick={() => setPlaybackSpeed(spd)}
                     className={`px-2 py-0.5 rounded text-[10px] cursor-pointer ${
                       playbackSpeed === spd
-                        ? 'bg-[#55DDF5] text-[#080D16] font-bold'
-                        : 'text-[#8293AA] hover:text-white'
+                        ? 'bg-white text-black font-bold'
+                        : 'text-neutral-400 hover:text-white'
                     }`}
                   >
                     {spd}x
@@ -142,9 +142,9 @@ export const ReplayController: React.FC = () => {
 
             {/* Current sample details */}
             {currentSample && (
-              <div className="hidden sm:flex items-center gap-3 text-[10px] text-[#8293AA]">
+              <div className="hidden sm:flex items-center gap-3 text-[10px] text-neutral-400">
                 <span>POS: <strong className="text-white">{currentSample.lat.toFixed(4)}°, {currentSample.lon.toFixed(4)}°</strong></span>
-                <span>ALT: <strong className="text-[#55DDF5]">{currentSample.altitude ? `${Math.round(currentSample.altitude)}m` : '0m'}</strong></span>
+                <span>ALT: <strong className="text-white">{currentSample.altitude ? `${Math.round(currentSample.altitude)}m` : '0m'}</strong></span>
                 <span>SPD: <strong className="text-white">{currentSample.velocity ? `${Math.round(currentSample.velocity * 3.6)}km/h` : '0'}</strong></span>
               </div>
             )}

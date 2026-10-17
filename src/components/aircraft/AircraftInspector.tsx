@@ -40,8 +40,8 @@ export const AircraftInspector: React.FC = () => {
   const aircraft = aircraftMap[selectedIcao24];
   if (!aircraft) {
     return (
-      <div className="w-80 bg-[#0E1624] border-l border-[#1C2A3E] p-4 text-xs font-mono text-[#8293AA]">
-        <div className="flex items-center justify-between pb-3 border-b border-[#1C2A3E]">
+      <div className="w-80 bg-black border-l border-[#222222] p-4 text-xs font-mono text-neutral-400">
+        <div className="flex items-center justify-between pb-3 border-b border-[#222222]">
           <span className="text-white font-bold">TARGET LOST</span>
           <button
             onClick={() => setSelectedIcao24(null)}
@@ -50,7 +50,7 @@ export const AircraftInspector: React.FC = () => {
             <X className="w-4 h-4" />
           </button>
         </div>
-        <p className="mt-4 text-[#53647B]">
+        <p className="mt-4 text-neutral-500">
           The previously selected aircraft ({selectedIcao24.toUpperCase()}) is no longer in the active sector response.
         </p>
       </div>
@@ -66,23 +66,23 @@ export const AircraftInspector: React.FC = () => {
   };
 
   const getVerticalRateIndicator = (rate: number | null) => {
-    if (rate === null || isNaN(rate)) return <span className="text-[#53647B]">N/A</span>;
+    if (rate === null || isNaN(rate)) return <span className="text-neutral-500">N/A</span>;
     if (Math.abs(rate) < 0.5) {
       return (
-        <span className="flex items-center gap-1 text-[#8293AA]">
+        <span className="flex items-center gap-1 text-neutral-400">
           <Minus className="w-3.5 h-3.5" /> LEVEL (0 m/s)
         </span>
       );
     }
     if (rate > 0) {
       return (
-        <span className="flex items-center gap-1 text-emerald-400 font-semibold">
+        <span className="flex items-center gap-1 text-white font-semibold">
           <ArrowUpRight className="w-3.5 h-3.5" /> CLIMB (+{rate.toFixed(1)} m/s)
         </span>
       );
     }
     return (
-      <span className="flex items-center gap-1 text-amber-400 font-semibold">
+      <span className="flex items-center gap-1 text-neutral-300 font-semibold">
         <ArrowDownRight className="w-3.5 h-3.5" /> DESCEND ({rate.toFixed(1)} m/s)
       </span>
     );
@@ -92,25 +92,25 @@ export const AircraftInspector: React.FC = () => {
     switch (aircraft.freshness) {
       case 'fresh':
         return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-500/40">
+          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-white text-black font-semibold">
             FRESH (&lt;30s)
           </span>
         );
       case 'aging':
         return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-950 text-amber-400 border border-amber-500/40">
+          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-neutral-800 text-neutral-300 border border-neutral-700">
             AGING (&lt;75s)
           </span>
         );
       case 'stale':
         return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-rose-950 text-rose-400 border border-rose-500/40">
+          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-neutral-900 text-neutral-500 border border-neutral-800">
             STALE (&gt;75s)
           </span>
         );
       default:
         return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300">
+          <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-neutral-800 text-neutral-300">
             UNKNOWN
           </span>
         );
@@ -118,11 +118,11 @@ export const AircraftInspector: React.FC = () => {
   };
 
   return (
-    <aside className="w-88 md:w-96 bg-[#0E1624] border-l border-[#1C2A3E] flex flex-col h-full z-20 shadow-2xl overflow-hidden animate-in slide-in-from-right duration-200">
+    <aside className="w-88 md:w-96 bg-black border-l border-[#222222] flex flex-col h-full z-20 shadow-2xl overflow-hidden animate-in slide-in-from-right duration-200">
       {/* Top Header */}
-      <div className="p-4 border-b border-[#1C2A3E] bg-[#131F30]/50 flex items-center justify-between">
+      <div className="p-4 border-b border-[#222222] bg-[#0A0A0A] flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded bg-[#080D16] border border-[#294262] text-[#55DDF5]">
+          <div className="p-2 rounded bg-black border border-[#222222] text-white">
             <Plane className="w-5 h-5" />
           </div>
           <div>
@@ -131,24 +131,24 @@ export const AircraftInspector: React.FC = () => {
                 {aircraft.callsign}
               </h2>
               {aircraft.onGround ? (
-                <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-amber-950 text-[#FFB454] border border-[#FFB454]/40">
+                <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-neutral-900 text-neutral-400 border border-neutral-700">
                   GROUND
                 </span>
               ) : (
-                <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-cyan-950 text-[#55DDF5] border border-[#55DDF5]/40">
+                <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-white/10 text-white border border-white/20">
                   AIRBORNE
                 </span>
               )}
             </div>
-            <p className="text-[11px] font-mono text-[#8293AA]">
-              ICAO: <span className="text-[#EAF1FA] font-semibold">{aircraft.icao24.toUpperCase()}</span> • {aircraft.originCountry}
+            <p className="text-[11px] font-mono text-neutral-400">
+              ICAO: <span className="text-white font-semibold">{aircraft.icao24.toUpperCase()}</span> • {aircraft.originCountry}
             </p>
           </div>
         </div>
 
         <button
           onClick={() => setSelectedIcao24(null)}
-          className="p-1.5 text-[#8293AA] hover:text-white rounded hover:bg-[#1C2A3E] transition-colors cursor-pointer"
+          className="p-1.5 text-neutral-400 hover:text-white rounded hover:bg-[#1A1A1A] transition-colors cursor-pointer"
           title="Close Inspector (Esc)"
         >
           <X className="w-4 h-4" />
@@ -156,20 +156,20 @@ export const AircraftInspector: React.FC = () => {
       </div>
 
       {/* Quick Action Toolbar */}
-      <div className="grid grid-cols-3 gap-1 p-2 bg-[#080D16] border-b border-[#1C2A3E] text-[10px] font-mono">
+      <div className="grid grid-cols-3 gap-1 p-2 bg-black border-b border-[#222222] text-[10px] font-mono">
         <button
           onClick={() => handleCopy(aircraft.icao24.toUpperCase(), 'icao')}
-          className="flex items-center justify-center gap-1.5 py-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] text-[#8293AA] hover:text-[#55DDF5] transition-colors cursor-pointer"
+          className="flex items-center justify-center gap-1.5 py-1.5 rounded bg-[#0A0A0A] hover:bg-[#1A1A1A] text-neutral-400 hover:text-white transition-colors cursor-pointer"
         >
-          {copiedField === 'icao' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+          {copiedField === 'icao' ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3" />}
           <span>{copiedField === 'icao' ? 'COPIED' : 'COPY ICAO'}</span>
         </button>
 
         <button
           onClick={() => handleCopy(`${aircraft.lat}, ${aircraft.lon}`, 'coords')}
-          className="flex items-center justify-center gap-1.5 py-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] text-[#8293AA] hover:text-[#55DDF5] transition-colors cursor-pointer"
+          className="flex items-center justify-center gap-1.5 py-1.5 rounded bg-[#0A0A0A] hover:bg-[#1A1A1A] text-neutral-400 hover:text-white transition-colors cursor-pointer"
         >
-          {copiedField === 'coords' ? <Check className="w-3 h-3 text-emerald-400" /> : <Waypoints className="w-3 h-3" />}
+          {copiedField === 'coords' ? <Check className="w-3 h-3 text-white" /> : <Waypoints className="w-3 h-3" />}
           <span>{copiedField === 'coords' ? 'COPIED' : 'COPY COORD'}</span>
         </button>
 
@@ -178,7 +178,7 @@ export const AircraftInspector: React.FC = () => {
             setIsReplayActive(true);
             setCurrentSection('history');
           }}
-          className="flex items-center justify-center gap-1.5 py-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] text-[#8293AA] hover:text-[#55DDF5] transition-colors cursor-pointer"
+          className="flex items-center justify-center gap-1.5 py-1.5 rounded bg-[#0A0A0A] hover:bg-[#1A1A1A] text-neutral-400 hover:text-white transition-colors cursor-pointer"
         >
           <History className="w-3 h-3" />
           <span>REPLAY</span>
@@ -189,8 +189,8 @@ export const AircraftInspector: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* Estimated Dead Reckoning Banner */}
         {aircraft.isEstimated && (
-          <div className="p-2.5 rounded bg-cyan-950/40 border border-[#55DDF5]/30 text-xs font-mono text-[#55DDF5] flex items-center gap-2">
-            <Sparkles className="w-4 h-4 shrink-0" />
+          <div className="p-2.5 rounded bg-[#0A0A0A] border border-neutral-700 text-xs font-mono text-neutral-300 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 shrink-0 text-white" />
             <span>Dead reckoning active: intermediate position estimated between updates.</span>
           </div>
         )}
@@ -198,52 +198,52 @@ export const AircraftInspector: React.FC = () => {
         {/* Primary Telemetry Cards */}
         <div className="grid grid-cols-2 gap-2">
           {/* Altitude */}
-          <div className="bg-[#131F30]/70 border border-[#1C2A3E] rounded p-2.5">
-            <div className="text-[10px] font-mono text-[#8293AA] uppercase tracking-wider mb-1 flex items-center justify-between">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded p-2.5">
+            <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider mb-1 flex items-center justify-between">
               <span>Baro Altitude</span>
-              <Gauge className="w-3 h-3 text-[#55DDF5]" />
+              <Gauge className="w-3 h-3 text-neutral-400" />
             </div>
             <div className="font-mono text-base font-bold text-white">
               {aircraft.baroAltitude !== null ? `${aircraft.baroAltitude.toLocaleString()} m` : 'N/A'}
             </div>
-            <div className="text-[10px] font-mono text-[#8293AA]">
+            <div className="text-[10px] font-mono text-neutral-500">
               {aircraft.baroAltitude !== null ? `${metersToFeet(aircraft.baroAltitude)?.toLocaleString()} ft` : 'Ground level / unavail'}
             </div>
           </div>
 
           {/* Speed */}
-          <div className="bg-[#131F30]/70 border border-[#1C2A3E] rounded p-2.5">
-            <div className="text-[10px] font-mono text-[#8293AA] uppercase tracking-wider mb-1 flex items-center justify-between">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded p-2.5">
+            <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider mb-1 flex items-center justify-between">
               <span>Ground Speed</span>
-              <Navigation className="w-3 h-3 text-[#55DDF5]" />
+              <Navigation className="w-3 h-3 text-neutral-400" />
             </div>
             <div className="font-mono text-base font-bold text-white">
               {aircraft.velocityKmh !== null ? `${aircraft.velocityKmh} km/h` : 'N/A'}
             </div>
-            <div className="text-[10px] font-mono text-[#8293AA]">
+            <div className="text-[10px] font-mono text-neutral-500">
               {aircraft.velocityKnots !== null ? `${aircraft.velocityKnots} kts (${aircraft.velocity} m/s)` : 'Stationary / N/A'}
             </div>
           </div>
 
           {/* Heading */}
-          <div className="bg-[#131F30]/70 border border-[#1C2A3E] rounded p-2.5">
-            <div className="text-[10px] font-mono text-[#8293AA] uppercase tracking-wider mb-1 flex items-center justify-between">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded p-2.5">
+            <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider mb-1 flex items-center justify-between">
               <span>Track / Heading</span>
-              <Compass className="w-3 h-3 text-[#55DDF5]" />
+              <Compass className="w-3 h-3 text-neutral-400" />
             </div>
             <div className="font-mono text-base font-bold text-white">
               {getHeadingCompass(aircraft.heading)}
             </div>
-            <div className="text-[10px] font-mono text-[#8293AA]">
+            <div className="text-[10px] font-mono text-neutral-500">
               Clockwise from True North
             </div>
           </div>
 
           {/* Vertical Rate */}
-          <div className="bg-[#131F30]/70 border border-[#1C2A3E] rounded p-2.5">
-            <div className="text-[10px] font-mono text-[#8293AA] uppercase tracking-wider mb-1 flex items-center justify-between">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded p-2.5">
+            <div className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider mb-1 flex items-center justify-between">
               <span>Vertical Rate</span>
-              <Radio className="w-3 h-3 text-[#55DDF5]" />
+              <Radio className="w-3 h-3 text-neutral-400" />
             </div>
             <div className="font-mono text-xs mt-1">
               {getVerticalRateIndicator(aircraft.verticalRate)}
@@ -252,64 +252,64 @@ export const AircraftInspector: React.FC = () => {
         </div>
 
         {/* Detailed Surveillance Specifications Table */}
-        <div className="bg-[#131F30]/40 border border-[#1C2A3E] rounded p-3 text-xs font-mono space-y-2">
-          <div className="text-[11px] font-bold text-white uppercase tracking-wider pb-1.5 border-b border-[#1C2A3E] flex items-center justify-between">
+        <div className="bg-[#0A0A0A] border border-[#222222] rounded p-3 text-xs font-mono space-y-2">
+          <div className="text-[11px] font-bold text-white uppercase tracking-wider pb-1.5 border-b border-[#222222] flex items-center justify-between">
             <span>Surveillance Vector</span>
             {getFreshnessBadge()}
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">Geographic Position:</span>
+            <span className="text-neutral-400">Geographic Position:</span>
             <span className="text-white font-medium text-right">
               {formatCoordinates(aircraft.lat, aircraft.lon)}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">Geometric Altitude:</span>
+            <span className="text-neutral-400">Geometric Altitude:</span>
             <span className="text-white">
-              {aircraft.geoAltitude !== null ? `${aircraft.geoAltitude.toLocaleString()} m (${metersToFeet(aircraft.geoAltitude)?.toLocaleString()} ft)` : <span className="text-[#53647B]">Unavailable</span>}
+              {aircraft.geoAltitude !== null ? `${aircraft.geoAltitude.toLocaleString()} m (${metersToFeet(aircraft.geoAltitude)?.toLocaleString()} ft)` : <span className="text-neutral-500">Unavailable</span>}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">Transponder Squawk:</span>
-            <span className="text-[#55DDF5] font-bold tracking-widest">
-              {aircraft.squawk || <span className="text-[#53647B]">None reported</span>}
+            <span className="text-neutral-400">Transponder Squawk:</span>
+            <span className="text-white font-mono font-bold tracking-widest">
+              {aircraft.squawk || <span className="text-neutral-500">None reported</span>}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">Position Source:</span>
+            <span className="text-neutral-400">Position Source:</span>
             <span className="text-white font-semibold">
               {aircraft.positionSource}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">SPI (Ident Pulse):</span>
-            <span className={aircraft.spi ? 'text-[#FFB454] font-bold' : 'text-[#8293AA]'}>
+            <span className="text-neutral-400">SPI (Ident Pulse):</span>
+            <span className={aircraft.spi ? 'text-white font-bold' : 'text-neutral-400'}>
               {aircraft.spi ? 'ACTIVE (PULSE)' : 'Inactive'}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">Observation Age:</span>
-            <span className="text-[#EAF1FA]">
+            <span className="text-neutral-400">Observation Age:</span>
+            <span className="text-white">
               {formatAgeString(aircraft.observationAgeSec)}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">Last Position Fix:</span>
-            <span className="text-[#8293AA]">
+            <span className="text-neutral-400">Last Position Fix:</span>
+            <span className="text-neutral-400">
               {aircraft.lastPositionTime ? new Date(aircraft.lastPositionTime * 1000).toLocaleTimeString() : 'N/A'}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-[#8293AA]">Recorded Trail Samples:</span>
-            <span className="text-[#55DDF5]">
+            <span className="text-neutral-400">Recorded Trail Samples:</span>
+            <span className="text-white font-semibold">
               {trails.length} samples collected
             </span>
           </div>
@@ -317,17 +317,17 @@ export const AircraftInspector: React.FC = () => {
 
         {/* Trail History Preview */}
         {trails.length > 0 && (
-          <div className="bg-[#131F30]/30 border border-[#1C2A3E] rounded p-3 text-xs font-mono">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded p-3 text-xs font-mono">
             <div className="text-[11px] font-bold text-white uppercase tracking-wider mb-2 flex items-center justify-between">
               <span>Recent Observations</span>
-              <span className="text-[10px] text-[#55DDF5]">{trails.length} fixes</span>
+              <span className="text-[10px] text-neutral-400">{trails.length} fixes</span>
             </div>
             <div className="max-h-36 overflow-y-auto space-y-1 pr-1">
               {trails.slice(-5).reverse().map((sample, idx) => (
-                <div key={idx} className="flex justify-between text-[10px] text-[#8293AA] py-1 border-b border-[#1C2A3E]/60 last:border-none">
+                <div key={idx} className="flex justify-between text-[10px] text-neutral-400 py-1 border-b border-[#222222] last:border-none">
                   <span>{new Date(sample.timestamp * 1000).toLocaleTimeString()}</span>
-                  <span className="text-[#EAF1FA]">{sample.lat.toFixed(3)}°, {sample.lon.toFixed(3)}°</span>
-                  <span className="text-[#55DDF5]">{sample.altitude ? `${Math.round(sample.altitude)}m` : '0m'}</span>
+                  <span className="text-white">{sample.lat.toFixed(3)}°, {sample.lon.toFixed(3)}°</span>
+                  <span className="text-neutral-300">{sample.altitude ? `${Math.round(sample.altitude)}m` : '0m'}</span>
                 </div>
               ))}
             </div>

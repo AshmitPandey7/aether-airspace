@@ -2,81 +2,76 @@
 
 @layer base {
   :root {
-    --bg-base: #080D16;
-    --bg-surface: #0E1624;
-    --bg-elevated: #131F30;
-    --border-subtle: #1C2A3E;
-    --border-bright: #294262;
-    --cyan-accent: #55DDF5;
-    --amber-accent: #FFB454;
-    --green-live: #10B981;
-    --red-alert: #F87171;
-    --text-primary: #EAF1FA;
-    --text-secondary: #8293AA;
-    --text-muted: #53647B;
+    --bg-base: #000000;
+    --bg-surface: #0A0A0A;
+    --bg-elevated: #121212;
+    --border-subtle: #222222;
+    --border-bright: #333333;
+    --text-primary: #FFFFFF;
+    --text-secondary: #999999;
+    --text-muted: #555555;
   }
 
   body {
-    background-color: var(--bg-base);
-    color: var(--text-primary);
+    background-color: #000000;
+    color: #FFFFFF;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     user-select: none;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Monospace for telemetry */
   .font-mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 
   .font-display {
-    font-family: 'Chakra Petch', 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
-/* Custom Sleek Scrollbar */
+/* Minimalist Dark Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #080D16;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1C2A3E;
-  border-radius: 3px;
+  background: #222222;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2D4363;
+  background: #444444;
 }
 
-/* Leaflet Customizations for Dark Aerospace Console */
+/* Leaflet Clean Monochrome Overrides */
 .leaflet-container {
-  background: #060910 !important;
+  background: #000000 !important;
   font-family: 'Inter', sans-serif !important;
   outline: none;
 }
 
 .leaflet-bar {
-  border: 1px solid #1C2A3E !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #222222 !important;
+  box-shadow: none !important;
   border-radius: 4px !important;
   overflow: hidden;
 }
 
 .leaflet-bar a {
-  background-color: #0E1624 !important;
-  color: #8293AA !important;
-  border-bottom: 1px solid #1C2A3E !important;
+  background-color: #0A0A0A !important;
+  color: #888888 !important;
+  border-bottom: 1px solid #222222 !important;
   transition: all 0.15s ease;
 }
 
 .leaflet-bar a:hover {
-  background-color: #131F30 !important;
-  color: #55DDF5 !important;
+  background-color: #1A1A1A !important;
+  color: #FFFFFF !important;
 }
 
 .leaflet-bar a:last-child {
@@ -84,27 +79,22 @@
 }
 
 .leaflet-control-attribution {
-  background: rgba(8, 13, 22, 0.85) !important;
+  background: rgba(0, 0, 0, 0.8) !important;
   backdrop-filter: blur(4px);
-  color: #53647B !important;
+  color: #555555 !important;
   font-size: 10px !important;
   padding: 2px 8px !important;
-  border-top-left-radius: 4px;
-  border: 1px solid #1C2A3E;
+  border: 1px solid #222222;
   border-bottom: none;
   border-right: none;
 }
 
 .leaflet-control-attribution a {
-  color: #8293AA !important;
+  color: #888888 !important;
   text-decoration: none;
 }
 
-.leaflet-control-attribution a:hover {
-  color: #55DDF5 !important;
-}
-
-/* Custom Aircraft DivIcon Styling */
+/* Aircraft Marker Styling */
 .aircraft-marker-container {
   display: flex;
   align-items: center;
@@ -115,69 +105,44 @@
 }
 
 .aircraft-icon-svg {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
-  transition: all 0.2s ease;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+  transition: transform 0.2s ease;
 }
 
 .aircraft-marker-selected .aircraft-icon-svg {
-  filter: drop-shadow(0 0 8px rgba(85, 221, 245, 0.85)) drop-shadow(0 0 2px #55DDF5);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
 }
 
 .aircraft-selection-ring {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  border: 1.5px dashed #55DDF5;
-  animation: radar-spin 6s linear infinite;
+  border: 1px solid #FFFFFF;
   pointer-events: none;
+  opacity: 0.8;
 }
 
 .aircraft-target-reticle {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   pointer-events: none;
 }
 
-@keyframes radar-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(0.97); }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2.5s ease-in-out infinite;
-}
-
-/* Radar Sweep Line Effect */
-@keyframes radar-sweep {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.radar-sweep-beam {
-  transform-origin: center center;
-  animation: radar-sweep 4s linear infinite;
-}
-
-/* Map Tooltip styling */
+/* Tooltip styling */
 .leaflet-tooltip-aircraft {
-  background: rgba(14, 22, 36, 0.95) !important;
-  backdrop-filter: blur(6px);
-  border: 1px solid #294262 !important;
-  border-radius: 4px !important;
-  color: #EAF1FA !important;
+  background: rgba(10, 10, 10, 0.95) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid #333333 !important;
+  border-radius: 3px !important;
+  color: #FFFFFF !important;
   font-family: 'JetBrains Mono', monospace !important;
   font-size: 11px !important;
   padding: 4px 8px !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8) !important;
 }
 
 .leaflet-tooltip-aircraft::before {
-  border-top-color: #294262 !important;
+  border-top-color: #333333 !important;
 }

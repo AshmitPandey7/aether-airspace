@@ -46,32 +46,29 @@ export const Header: React.FC = () => {
     switch (dataMode) {
       case 'LIVE':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-medium shadow-[0_0_10px_rgba(16,185,129,0.2)]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#111111] border border-[#333333] text-white text-xs font-mono font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             <span>LIVE ADSB</span>
           </div>
         );
       case 'DELAYED':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-950/70 border border-amber-500/40 text-amber-400 text-xs font-mono font-medium">
-            <Radio className="w-3.5 h-3.5 animate-pulse text-amber-400" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#111111] border border-[#333333] text-[#AAAAAA] text-xs font-mono font-medium">
+            <Radio className="w-3.5 h-3.5" />
             <span>DELAYED</span>
           </div>
         );
       case 'DEMO':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-cyan-950/70 border border-[#55DDF5]/40 text-[#55DDF5] text-xs font-mono font-medium shadow-[0_0_10px_rgba(85,221,245,0.2)]">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#111111] border border-[#444444] text-white text-xs font-mono font-medium">
             <Layers className="w-3.5 h-3.5" />
-            <span>DEMO REPLAY</span>
+            <span>DEMO SIM</span>
           </div>
         );
       case 'OFFLINE':
       default:
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-rose-950/70 border border-rose-500/40 text-rose-400 text-xs font-mono font-medium">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#111111] border border-[#333333] text-[#777777] text-xs font-mono font-medium">
             <WifiOff className="w-3.5 h-3.5" />
             <span>OFFLINE</span>
           </div>
@@ -80,39 +77,37 @@ export const Header: React.FC = () => {
   };
 
   const navItems: { id: NavSection; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'home', label: '3D Overview', icon: <Sparkles className="w-4 h-4 text-[#55DDF5]" /> },
-    { id: 'airspace', label: 'Live Airspace', icon: <Plane className="w-4 h-4" /> },
-    { id: 'history', label: 'Flight History & Replay', icon: <Clock className="w-4 h-4" /> },
-    { id: 'alerts', label: 'Sector Alerts', icon: <AlertTriangle className="w-4 h-4" />, badge: unackAlertsCount },
-    { id: 'diagnostics', label: 'Diagnostics', icon: <Activity className="w-4 h-4" /> },
+    { id: 'home', label: 'Overview', icon: <Sparkles className="w-3.5 h-3.5" /> },
+    { id: 'airspace', label: 'Airspace Radar', icon: <Plane className="w-3.5 h-3.5" /> },
+    { id: 'history', label: 'History & Replay', icon: <Clock className="w-3.5 h-3.5" /> },
+    { id: 'alerts', label: 'Alerts', icon: <AlertTriangle className="w-3.5 h-3.5" />, badge: unackAlertsCount },
+    { id: 'diagnostics', label: 'Diagnostics', icon: <Activity className="w-3.5 h-3.5" /> },
   ];
 
   return (
-    <header className="h-14 bg-[#0E1624] border-b border-[#1C2A3E] px-4 flex items-center justify-between z-30 select-none relative">
+    <header className="h-14 bg-black border-b border-[#222222] px-4 flex items-center justify-between z-30 select-none relative font-mono">
       {/* Brand & Wordmark */}
       <div className="flex items-center gap-6">
         <button 
           onClick={() => setCurrentSection('home')}
           className="flex items-center gap-3 cursor-pointer text-left focus:outline-none"
-          title="Return to 3D Overview"
+          title="Return to Overview"
         >
-          <div className="relative w-8 h-8 rounded bg-[#131F30] border border-[#294262] flex items-center justify-center shadow-inner overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(85,221,245,0.2)_0%,transparent_70%)]" />
-            <div className="w-4 h-4 rounded-full border border-[#55DDF5]/40 flex items-center justify-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#55DDF5] shadow-[0_0_6px_#55DDF5]" />
+          <div className="w-8 h-8 rounded bg-[#111111] border border-[#333333] flex items-center justify-center">
+            <div className="w-3.5 h-3.5 rounded-full border border-white/60 flex items-center justify-center">
+              <div className="w-1 h-1 rounded-full bg-white" />
             </div>
-            <div className="absolute w-full h-[1px] bg-[#55DDF5]/20 radar-sweep-beam" />
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display tracking-widest font-bold text-lg text-white">AETHER</span>
-              <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-[#131F30] text-[#55DDF5] border border-[#1C2A3E]">
+              <span className="font-bold text-sm tracking-wider text-white">AETHER</span>
+              <span className="text-[9px] uppercase px-1 py-0.2 rounded bg-[#1A1A1A] text-[#888888] border border-[#2E2E2E]">
                 v2.6
               </span>
             </div>
-            <p className="text-[10px] font-mono text-[#8293AA] tracking-wider hidden sm:block">
-              AIRSPACE INTELLIGENCE &amp; SURVEILLANCE
+            <p className="text-[10px] text-[#666666] tracking-wider hidden sm:block">
+              AIRSPACE INTELLIGENCE
             </p>
           </div>
         </button>
@@ -121,17 +116,17 @@ export const Header: React.FC = () => {
         <div className="relative">
           <button
             onClick={() => setIsRegionDropdownOpen(!isRegionDropdownOpen)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] border border-[#1C2A3E] hover:border-[#294262] text-xs font-mono text-[#EAF1FA] transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded bg-[#0E0E0E] hover:bg-[#161616] border border-[#262626] hover:border-[#444444] text-xs text-white transition-all cursor-pointer"
             title="Change monitored geographic sector"
           >
-            <Globe className="w-3.5 h-3.5 text-[#55DDF5]" />
-            <span className="font-semibold">{selectedRegion.name}</span>
-            <ChevronDown className="w-3.5 h-3.5 text-[#8293AA]" />
+            <Globe className="w-3.5 h-3.5 text-white" />
+            <span className="font-medium">{selectedRegion.name}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-[#666666]" />
           </button>
 
           {isRegionDropdownOpen && (
-            <div className="absolute left-0 mt-1 w-64 bg-[#0E1624] border border-[#294262] rounded-md shadow-2xl py-1 z-50 backdrop-blur-md">
-              <div className="px-3 py-1.5 border-b border-[#1C2A3E] text-[10px] font-mono text-[#8293AA] uppercase tracking-wider">
+            <div className="absolute left-0 mt-1 w-64 bg-[#0A0A0A] border border-[#333333] rounded-md shadow-2xl py-1 z-50">
+              <div className="px-3 py-1.5 border-b border-[#222222] text-[10px] text-[#666666] uppercase tracking-wider">
                 Select Monitored Sector
               </div>
               {PRESET_REGIONS.map((region) => (
@@ -141,17 +136,17 @@ export const Header: React.FC = () => {
                     setSelectedRegion(region);
                     setIsRegionDropdownOpen(false);
                   }}
-                  className={`w-full text-left px-3 py-2 text-xs font-mono flex flex-col transition-colors cursor-pointer ${
+                  className={`w-full text-left px-3 py-2 text-xs flex flex-col transition-colors cursor-pointer ${
                     region.id === selectedRegion.id
-                      ? 'bg-[#131F30] text-[#55DDF5] font-semibold border-l-2 border-[#55DDF5]'
-                      : 'text-[#8293AA] hover:bg-[#131F30]/60 hover:text-white'
+                      ? 'bg-[#1A1A1A] text-white font-semibold border-l-2 border-white'
+                      : 'text-[#888888] hover:bg-[#141414] hover:text-white'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span>{region.name}</span>
-                    {region.id === selectedRegion.id && <CheckCircle2 className="w-3 h-3 text-[#55DDF5]" />}
+                    {region.id === selectedRegion.id && <CheckCircle2 className="w-3 h-3 text-white" />}
                   </div>
-                  <span className="text-[10px] text-[#53647B] truncate">{region.description}</span>
+                  <span className="text-[10px] text-[#555555] truncate">{region.description}</span>
                 </button>
               ))}
             </div>
@@ -160,23 +155,23 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Middle Navigation Tabs */}
-      <nav className="hidden lg:flex items-center gap-1 bg-[#080D16]/80 p-1 rounded-lg border border-[#1C2A3E]">
+      <nav className="hidden lg:flex items-center gap-1 bg-[#0A0A0A] p-1 rounded-md border border-[#222222]">
         {navItems.map((item) => {
           const isActive = currentSection === item.id;
           return (
             <button
               key={item.id}
               onClick={() => setCurrentSection(item.id)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer relative ${
+              className={`flex items-center gap-2 px-3 py-1 rounded text-xs transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#131F30] text-[#55DDF5] shadow-[0_0_12px_rgba(85,221,245,0.15)] border border-[#55DDF5]/30'
-                  : 'text-[#8293AA] hover:text-[#EAF1FA] hover:bg-[#131F30]/40'
+                  ? 'bg-[#1E1E1E] text-white font-semibold border border-[#333333]'
+                  : 'text-[#888888] hover:text-white hover:bg-[#141414]'
               }`}
             >
               {item.icon}
               <span>{item.label}</span>
               {item.badge !== undefined && item.badge > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-rose-500/20 text-rose-400 border border-rose-500/40">
+                <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-white text-black font-bold">
                   {item.badge}
                 </span>
               )}
@@ -188,9 +183,9 @@ export const Header: React.FC = () => {
       {/* Right Controls & Telemetry */}
       <div className="flex items-center gap-3">
         {/* Tracked Count */}
-        <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded bg-[#131F30]/80 border border-[#1C2A3E] text-xs font-mono">
-          <Plane className="w-3.5 h-3.5 text-[#55DDF5]" />
-          <span className="text-[#8293AA]">TRACKED:</span>
+        <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded bg-[#0E0E0E] border border-[#222222] text-xs">
+          <Plane className="w-3.5 h-3.5 text-white" />
+          <span className="text-[#666666]">TRACKED:</span>
           <span className="text-white font-bold">{totalAircraft}</span>
         </div>
 
@@ -198,44 +193,44 @@ export const Header: React.FC = () => {
         {getStatusBadge()}
 
         {/* Polling countdown & refresh button */}
-        <div className="flex items-center gap-1 bg-[#131F30] border border-[#1C2A3E] rounded p-0.5">
+        <div className="flex items-center gap-1 bg-[#0E0E0E] border border-[#222222] rounded p-0.5">
           <button
             onClick={() => fetchAirspaceData()}
             disabled={isLoading}
-            className="p-1.5 hover:bg-[#1C2A3E] text-[#8293AA] hover:text-[#55DDF5] rounded transition-all cursor-pointer disabled:opacity-50"
-            title="Force immediate airspace scan"
+            className="p-1 hover:bg-[#1A1A1A] text-[#888888] hover:text-white rounded transition-all cursor-pointer disabled:opacity-50"
+            title="Scan sector"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#55DDF5]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-white' : ''}`} />
           </button>
           <span 
-            className="text-[10px] font-mono text-[#8293AA] px-1.5 cursor-pointer hover:text-white"
+            className="text-[10px] text-[#666666] px-1.5"
             title={`Auto-refreshes every ${pollingIntervalSec}s. Next in ${secondsUntilNextPoll}s.`}
           >
             {secondsUntilNextPoll}s
           </span>
         </div>
 
-        {/* Mode / Quick Settings Dropdown */}
+        {/* Settings Dropdown */}
         <div className="relative">
           <button
             onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-            className="p-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] border border-[#1C2A3E] text-[#8293AA] hover:text-white transition-colors cursor-pointer"
-            title="Airspace configuration"
+            className="p-1.5 rounded bg-[#0E0E0E] hover:bg-[#1A1A1A] border border-[#222222] text-[#888888] hover:text-white transition-colors cursor-pointer"
+            title="Preferences"
           >
             <Settings className="w-4 h-4" />
           </button>
 
           {isSettingsOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-[#0E1624] border border-[#294262] rounded-md shadow-2xl p-3 z-50 text-xs font-mono">
-              <div className="font-semibold text-white border-b border-[#1C2A3E] pb-2 mb-3 flex items-center justify-between">
+            <div className="absolute right-0 mt-2 w-64 bg-[#0A0A0A] border border-[#333333] rounded-md shadow-2xl p-3 z-50 text-xs">
+              <div className="font-semibold text-white border-b border-[#222222] pb-2 mb-3 flex items-center justify-between">
                 <span>SYSTEM PREFERENCES</span>
-                <SlidersHorizontal className="w-3.5 h-3.5 text-[#55DDF5]" />
+                <SlidersHorizontal className="w-3.5 h-3.5 text-white" />
               </div>
 
               {/* Data Mode Switch */}
               <div className="mb-3">
-                <label className="text-[11px] text-[#8293AA] block mb-1">DATA FEED MODE</label>
-                <div className="grid grid-cols-2 gap-1.5 bg-[#080D16] p-1 rounded border border-[#1C2A3E]">
+                <label className="text-[11px] text-[#888888] block mb-1">DATA FEED MODE</label>
+                <div className="grid grid-cols-2 gap-1.5 bg-[#000000] p-1 rounded border border-[#222222]">
                   <button
                     onClick={() => {
                       setDataMode('LIVE');
@@ -243,8 +238,8 @@ export const Header: React.FC = () => {
                     }}
                     className={`py-1 text-center rounded transition-colors cursor-pointer ${
                       dataMode === 'LIVE'
-                        ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/40 font-semibold'
-                        : 'text-[#8293AA] hover:text-white'
+                        ? 'bg-[#222222] text-white border border-[#444444] font-semibold'
+                        : 'text-[#888888] hover:text-white'
                     }`}
                   >
                     LIVE OPENSKY
@@ -256,8 +251,8 @@ export const Header: React.FC = () => {
                     }}
                     className={`py-1 text-center rounded transition-colors cursor-pointer ${
                       dataMode === 'DEMO'
-                        ? 'bg-cyan-950 text-[#55DDF5] border border-[#55DDF5]/40 font-semibold'
-                        : 'text-[#8293AA] hover:text-white'
+                        ? 'bg-[#222222] text-white border border-[#444444] font-semibold'
+                        : 'text-[#888888] hover:text-white'
                     }`}
                   >
                     DEMO SIM
@@ -267,7 +262,7 @@ export const Header: React.FC = () => {
 
               {/* Polling Interval */}
               <div>
-                <label className="text-[11px] text-[#8293AA] block mb-1">POLL FREQUENCY</label>
+                <label className="text-[11px] text-[#888888] block mb-1">POLL FREQUENCY</label>
                 <div className="grid grid-cols-4 gap-1">
                   {[5, 10, 15, 30].map((sec) => (
                     <button
@@ -278,17 +273,14 @@ export const Header: React.FC = () => {
                       }}
                       className={`py-1 rounded text-center transition-colors cursor-pointer ${
                         pollingIntervalSec === sec
-                          ? 'bg-[#131F30] text-[#55DDF5] border border-[#55DDF5]/40 font-bold'
-                          : 'bg-[#080D16] text-[#8293AA] hover:text-white border border-[#1C2A3E]'
+                          ? 'bg-[#222222] text-white border border-[#444444] font-bold'
+                          : 'bg-[#000000] text-[#888888] hover:text-white border border-[#222222]'
                       }`}
                     >
                       {sec}s
                     </button>
                   ))}
                 </div>
-                <p className="text-[9px] text-[#53647B] mt-1.5">
-                  OpenSky limits anonymous IP requests to ~10s minimum.
-                </p>
               </div>
             </div>
           )}

@@ -42,19 +42,19 @@ export const AircraftList: React.FC = () => {
   const displayedList = filteredList.slice(0, 60);
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 bg-[#0E1624]">
+    <div className="flex-1 flex flex-col min-h-0 bg-black">
       {/* List Header Count */}
-      <div className="px-3 py-2 bg-[#131F30]/40 border-b border-[#1C2A3E] flex items-center justify-between text-[11px] font-mono text-[#8293AA]">
+      <div className="px-3 py-2 bg-[#0A0A0A] border-b border-[#222222] flex items-center justify-between text-[11px] font-mono text-neutral-400">
         <span>SURVEILLANCE MANIFEST</span>
-        <span className="text-[#55DDF5] font-semibold">
+        <span className="text-white font-semibold">
           {filteredList.length} / {allAircraft.length}
         </span>
       </div>
 
       {/* Aircraft Rows */}
-      <div className="flex-1 overflow-y-auto divide-y divide-[#1C2A3E]/60">
+      <div className="flex-1 overflow-y-auto divide-y divide-[#222222]">
         {filteredList.length === 0 ? (
-          <div className="p-6 text-center text-xs font-mono text-[#53647B]">
+          <div className="p-6 text-center text-xs font-mono text-neutral-500">
             <Plane className="w-6 h-6 mx-auto mb-2 opacity-30" />
             <p>No aircraft matching current filter criteria.</p>
           </div>
@@ -69,8 +69,8 @@ export const AircraftList: React.FC = () => {
                 onClick={() => setSelectedIcao24(ac.icao24)}
                 className={`p-2.5 transition-all cursor-pointer select-none font-mono text-xs ${
                   isSelected
-                    ? 'bg-[#131F30] border-l-2 border-[#55DDF5] shadow-[inset_0_0_12px_rgba(85,221,245,0.1)]'
-                    : 'hover:bg-[#131F30]/50 border-l-2 border-transparent'
+                    ? 'bg-[#141414] border-l-2 border-white'
+                    : 'hover:bg-[#0A0A0A] border-l-2 border-transparent'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -83,18 +83,18 @@ export const AircraftList: React.FC = () => {
                       <Plane 
                         className={`w-3.5 h-3.5 ${
                           isSelected 
-                            ? 'text-[#55DDF5]' 
+                            ? 'text-white' 
                             : ac.onGround 
-                            ? 'text-[#FFB454]' 
-                            : 'text-[#8293AA]'
+                            ? 'text-neutral-500' 
+                            : 'text-neutral-300'
                         }`} 
                       />
                     </div>
                     <div>
-                      <span className={`font-bold ${isSelected ? 'text-[#55DDF5]' : 'text-white'}`}>
+                      <span className={`font-bold ${isSelected ? 'text-white' : 'text-neutral-200'}`}>
                         {ac.callsign}
                       </span>
-                      <span className="text-[10px] text-[#53647B] ml-1.5">
+                      <span className="text-[10px] text-neutral-500 ml-1.5">
                         {ac.icao24.toUpperCase()}
                       </span>
                     </div>
@@ -105,21 +105,21 @@ export const AircraftList: React.FC = () => {
                     <span 
                       className={`w-1.5 h-1.5 rounded-full ${
                         ac.freshness === 'fresh' 
-                          ? 'bg-emerald-400 shadow-[0_0_4px_#34D399]' 
+                          ? 'bg-white shadow-[0_0_4px_rgba(255,255,255,0.8)]' 
                           : ac.freshness === 'aging' 
-                          ? 'bg-amber-400' 
-                          : 'bg-rose-400'
+                          ? 'bg-neutral-500' 
+                          : 'bg-neutral-700'
                       }`} 
                     />
-                    <ChevronRight className="w-3.5 h-3.5 text-[#53647B]" />
+                    <ChevronRight className="w-3.5 h-3.5 text-neutral-600" />
                   </div>
                 </div>
 
                 {/* Telemetry Row */}
-                <div className="mt-1 flex items-center justify-between text-[11px] text-[#8293AA]">
+                <div className="mt-1 flex items-center justify-between text-[11px] text-neutral-400">
                   <span>
                     {ac.onGround ? (
-                      <span className="text-[#FFB454]">ON GROUND</span>
+                      <span className="text-neutral-500">ON GROUND</span>
                     ) : ac.baroAltitude !== null ? (
                       `FL${Math.round(ac.baroAltitude * 0.0328)} (${Math.round(ac.baroAltitude)}m)`
                     ) : (
@@ -129,7 +129,7 @@ export const AircraftList: React.FC = () => {
                   <span>
                     {ac.velocityKmh !== null ? `${ac.velocityKmh} km/h` : '0 km/h'}
                   </span>
-                  <span className="text-[#53647B] text-[10px]">
+                  <span className="text-neutral-500 text-[10px]">
                     {ac.heading !== null ? `${ac.heading}°` : '--°'}
                   </span>
                 </div>
@@ -138,7 +138,7 @@ export const AircraftList: React.FC = () => {
           })
         )}
         {filteredList.length > 60 && (
-          <div className="p-2.5 text-center text-[10px] text-[#53647B] font-mono bg-[#080D16]/50">
+          <div className="p-2.5 text-center text-[10px] text-neutral-500 font-mono bg-black">
             Showing top 60 of {filteredList.length} aircraft. Use search to filter specific targets.
           </div>
         )}

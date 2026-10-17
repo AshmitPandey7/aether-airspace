@@ -27,16 +27,16 @@ export const DiagnosticsPanel: React.FC = () => {
     : '0.0';
 
   return (
-    <div className="flex-1 bg-[#080D16] p-6 overflow-y-auto font-mono text-xs">
+    <div className="flex-1 bg-black p-6 overflow-y-auto font-mono text-xs">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Title */}
-        <div className="flex items-center justify-between pb-4 border-b border-[#1C2A3E]">
+        <div className="flex items-center justify-between pb-4 border-b border-[#222222]">
           <div>
             <h1 className="font-display font-bold text-xl text-white tracking-wide flex items-center gap-2">
-              <Activity className="w-6 h-6 text-[#55DDF5]" />
+              <Activity className="w-6 h-6 text-white" />
               <span>SYSTEM DIAGNOSTICS &amp; API TELEMETRY</span>
             </h1>
-            <p className="text-xs text-[#8293AA] mt-1">
+            <p className="text-xs text-neutral-400 mt-1">
               Real-time surveillance pipeline health, OpenSky rate limits, network latency, and audit event logs.
             </p>
           </div>
@@ -44,63 +44,63 @@ export const DiagnosticsPanel: React.FC = () => {
           <button
             onClick={() => fetchAirspaceData()}
             disabled={isLoading}
-            className="px-3 py-1.5 rounded bg-[#131F30] hover:bg-[#1C2A3E] border border-[#294262] text-white flex items-center gap-2 transition-colors cursor-pointer"
+            className="px-3 py-1.5 rounded bg-[#0A0A0A] hover:bg-[#1A1A1A] border border-[#222222] text-white flex items-center gap-2 transition-colors cursor-pointer"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#55DDF5]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-white' : ''}`} />
             <span>PING OPENSKY ENDPOINT</span>
           </button>
         </div>
 
         {/* 4 Metric Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-[#0E1624] border border-[#1C2A3E] rounded-lg p-4">
-            <div className="flex items-center justify-between text-[#8293AA] mb-1">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded-lg p-4">
+            <div className="flex items-center justify-between text-neutral-400 mb-1">
               <span>LATENCY (RTT)</span>
-              <Network className="w-4 h-4 text-[#55DDF5]" />
+              <Network className="w-4 h-4 text-white" />
             </div>
             <div className="text-2xl font-bold text-white">
-              {diagnostics.lastFetchDurationMs} <span className="text-xs font-normal text-[#8293AA]">ms</span>
+              {diagnostics.lastFetchDurationMs} <span className="text-xs font-normal text-neutral-400">ms</span>
             </div>
-            <div className="text-[10px] text-[#53647B] mt-1">
+            <div className="text-[10px] text-neutral-500 mt-1">
               Last probe: {diagnostics.lastFetchTime ? new Date(diagnostics.lastFetchTime).toLocaleTimeString() : 'N/A'}
             </div>
           </div>
 
-          <div className="bg-[#0E1624] border border-[#1C2A3E] rounded-lg p-4">
-            <div className="flex items-center justify-between text-[#8293AA] mb-1">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded-lg p-4">
+            <div className="flex items-center justify-between text-neutral-400 mb-1">
               <span>TOTAL REQUESTS</span>
-              <Server className="w-4 h-4 text-emerald-400" />
+              <Server className="w-4 h-4 text-white" />
             </div>
             <div className="text-2xl font-bold text-white">
               {diagnostics.totalRequests}
             </div>
-            <div className="text-[10px] text-[#8293AA] mt-1">
+            <div className="text-[10px] text-neutral-400 mt-1">
               Fail rate: {failureRate}% ({diagnostics.failedRequests} failed)
             </div>
           </div>
 
-          <div className="bg-[#0E1624] border border-[#1C2A3E] rounded-lg p-4">
-            <div className="flex items-center justify-between text-[#8293AA] mb-1">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded-lg p-4">
+            <div className="flex items-center justify-between text-neutral-400 mb-1">
               <span>429 RATE LIMITS</span>
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <AlertTriangle className="w-4 h-4 text-neutral-400" />
             </div>
-            <div className="text-2xl font-bold text-amber-400">
+            <div className="text-2xl font-bold text-white">
               {diagnostics.rateLimitedRequests}
             </div>
-            <div className="text-[10px] text-[#8293AA] mt-1">
+            <div className="text-[10px] text-neutral-500 mt-1">
               Anonymous limit: ~1 req / 10s
             </div>
           </div>
 
-          <div className="bg-[#0E1624] border border-[#1C2A3E] rounded-lg p-4">
-            <div className="flex items-center justify-between text-[#8293AA] mb-1">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded-lg p-4">
+            <div className="flex items-center justify-between text-neutral-400 mb-1">
               <span>ACTIVE PIPELINE</span>
-              <Radio className="w-4 h-4 text-[#55DDF5]" />
+              <Radio className="w-4 h-4 text-white" />
             </div>
-            <div className="text-2xl font-bold text-[#55DDF5]">
+            <div className="text-2xl font-bold text-white">
               {dataMode}
             </div>
-            <div className="text-[10px] text-[#8293AA] mt-1">
+            <div className="text-[10px] text-neutral-500 mt-1">
               {totalAircraft} tracked in {selectedRegion.name}
             </div>
           </div>
@@ -109,30 +109,30 @@ export const DiagnosticsPanel: React.FC = () => {
         {/* 2-Column Section: Error Log & Event Timeline */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* API Error & Exception Log */}
-          <div className="bg-[#0E1624] border border-[#1C2A3E] rounded-lg p-4 flex flex-col min-h-[350px]">
-            <div className="font-bold text-white uppercase tracking-wider pb-3 border-b border-[#1C2A3E] mb-3 flex items-center justify-between">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded-lg p-4 flex flex-col min-h-[350px]">
+            <div className="font-bold text-white uppercase tracking-wider pb-3 border-b border-[#222222] mb-3 flex items-center justify-between">
               <span>API ERROR AUDIT TRAIL</span>
-              <span className="text-[10px] text-[#8293AA]">{diagnostics.errorLog.length} INCIDENTS</span>
+              <span className="text-[10px] text-neutral-400">{diagnostics.errorLog.length} INCIDENTS</span>
             </div>
 
             {diagnostics.errorLog.length === 0 ? (
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-[#53647B]">
-                <CheckCircle2 className="w-8 h-8 mb-2 text-emerald-400/50" />
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-6 text-neutral-500">
+                <CheckCircle2 className="w-8 h-8 mb-2 text-neutral-600" />
                 <p>Zero HTTP or transport errors recorded.</p>
               </div>
             ) : (
               <div className="space-y-2 overflow-y-auto max-h-[320px] pr-1">
                 {diagnostics.errorLog.map((err) => (
-                  <div key={err.id} className="p-2.5 rounded bg-[#131F30]/70 border border-rose-500/30 text-rose-300 space-y-1">
+                  <div key={err.id} className="p-2.5 rounded bg-black border border-neutral-800 text-neutral-300 space-y-1">
                     <div className="flex justify-between items-center text-[10px]">
-                      <span className="font-bold text-rose-400">
+                      <span className="font-bold text-white">
                         {err.status ? `HTTP ${err.status}` : 'TRANSPORT ERROR'}
                       </span>
-                      <span className="text-[#8293AA]">
+                      <span className="text-neutral-500">
                         {new Date(err.time).toLocaleTimeString()}
                       </span>
                     </div>
-                    <p className="text-[11px] leading-tight text-white/90">
+                    <p className="text-[11px] leading-tight text-neutral-300">
                       {err.message}
                     </p>
                   </div>
@@ -142,33 +142,33 @@ export const DiagnosticsPanel: React.FC = () => {
           </div>
 
           {/* Real-time System Event Audit Timeline */}
-          <div className="bg-[#0E1624] border border-[#1C2A3E] rounded-lg p-4 flex flex-col min-h-[350px]">
-            <div className="font-bold text-white uppercase tracking-wider pb-3 border-b border-[#1C2A3E] mb-3 flex items-center justify-between">
+          <div className="bg-[#0A0A0A] border border-[#222222] rounded-lg p-4 flex flex-col min-h-[350px]">
+            <div className="font-bold text-white uppercase tracking-wider pb-3 border-b border-[#222222] mb-3 flex items-center justify-between">
               <span>SECTOR EVENT TIMELINE</span>
-              <span className="text-[10px] text-[#55DDF5]">{systemEvents.length} EVENTS</span>
+              <span className="text-[10px] text-white font-semibold">{systemEvents.length} EVENTS</span>
             </div>
 
             <div className="space-y-2 overflow-y-auto max-h-[320px] pr-1">
               {systemEvents.slice(0, 30).map((evt) => (
-                <div key={evt.id} className="p-2.5 rounded bg-[#131F30]/40 border border-[#1C2A3E] flex items-start gap-2.5">
+                <div key={evt.id} className="p-2.5 rounded bg-black border border-[#222222] flex items-start gap-2.5">
                   <span 
                     className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
                       evt.level === 'error'
-                        ? 'bg-rose-400'
+                        ? 'bg-neutral-600'
                         : evt.level === 'warning'
-                        ? 'bg-amber-400'
+                        ? 'bg-neutral-400'
                         : evt.level === 'success'
-                        ? 'bg-emerald-400'
-                        : 'bg-[#55DDF5]'
+                        ? 'bg-white'
+                        : 'bg-neutral-300'
                     }`} 
                   />
                   <div className="flex-1 space-y-0.5">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-white text-[11px]">{evt.title}</span>
-                      <span className="text-[10px] text-[#53647B]">{new Date(evt.timestamp).toLocaleTimeString()}</span>
+                      <span className="text-[10px] text-neutral-500">{new Date(evt.timestamp).toLocaleTimeString()}</span>
                     </div>
                     {evt.details && (
-                      <p className="text-[10px] text-[#8293AA] leading-normal">{evt.details}</p>
+                      <p className="text-[10px] text-neutral-400 leading-normal">{evt.details}</p>
                     )}
                   </div>
                 </div>

@@ -25,31 +25,27 @@ function createAircraftIconHtml(aircraft: Aircraft, isSelected: boolean): string
   const isGround = aircraft.onGround;
   const isEstimated = aircraft.isEstimated;
 
-  // Color coding:
-  // Selected -> Electric Cyan #55DDF5 with glow
-  // On ground -> Restrained Amber #FFB454
-  // Aging/Stale -> Muted Slate #8293AA
-  // Airborne Fresh -> Electric Cyan #55DDF5 or Crisp White
-  let color = '#55DDF5';
+  // Monochrome tactical styling
+  let color = '#FFFFFF';
   if (isGround) {
-    color = '#FFB454';
+    color = '#888888';
   } else if (aircraft.freshness === 'stale') {
-    color = '#64748B';
+    color = '#555555';
   } else if (aircraft.freshness === 'aging') {
-    color = '#94A3B8';
+    color = '#AAAAAA';
   }
 
   const selectionReticle = isSelected ? `
     <div class="aircraft-selection-ring"></div>
     <div class="aircraft-target-reticle">
       <svg viewBox="0 0 40 40" fill="none" class="w-full h-full">
-        <path d="M4 12V4H12M28 4H36V12M36 28V36H28M12 36H4V28" stroke="#55DDF5" stroke-width="1.5" />
+        <path d="M4 12V4H12M28 4H36V12M36 28V36H28M12 36H4V28" stroke="#FFFFFF" stroke-width="1.5" />
       </svg>
     </div>
   ` : '';
 
   const estimatedIndicator = isEstimated ? `
-    <div class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-cyan-400 border border-black animate-ping"></div>
+    <div class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-white border border-black animate-ping"></div>
   ` : '';
 
   return `
@@ -157,11 +153,11 @@ export const AirspaceMap: React.FC = () => {
       ];
 
       const rect = L.rectangle(bounds, {
-        color: '#55DDF5',
+        color: '#666666',
         weight: 1,
-        dashArray: '4, 6',
-        fillOpacity: 0.03,
-        fillColor: '#55DDF5'
+        dashArray: '3, 5',
+        fillOpacity: 0.02,
+        fillColor: '#FFFFFF'
       }).addTo(map);
 
       regionBoundsRectRef.current = rect;
@@ -257,10 +253,10 @@ export const AirspaceMap: React.FC = () => {
         // Hover tooltip
         marker.bindTooltip(`
           <div class="text-[11px] font-mono leading-tight">
-            <div class="font-bold text-[#55DDF5]">${ac.callsign} <span class="text-white/60 font-normal">(${ac.icao24.toUpperCase()})</span></div>
-            <div class="text-[#8293AA] text-[10px] mt-0.5">${ac.originCountry}</div>
-            <div class="text-white/90 text-[10px] mt-1">${formatAltitude(ac.baroAltitude, 'dual')}</div>
-            <div class="text-white/80 text-[10px]">${formatVelocity(ac.velocity)}</div>
+            <div class="font-bold text-white">${ac.callsign} <span class="text-neutral-400 font-normal">(${ac.icao24.toUpperCase()})</span></div>
+            <div class="text-neutral-400 text-[10px] mt-0.5">${ac.originCountry}</div>
+            <div class="text-neutral-200 text-[10px] mt-1">${formatAltitude(ac.baroAltitude, 'dual')}</div>
+            <div class="text-neutral-300 text-[10px]">${formatVelocity(ac.velocity)}</div>
           </div>
         `, {
           className: 'leaflet-tooltip-aircraft',
@@ -312,10 +308,10 @@ export const AirspaceMap: React.FC = () => {
         const latLngs = trail.map((p) => [p.lat, p.lon] as [number, number]);
 
         const polyline = L.polyline(latLngs, {
-          color: '#55DDF5',
-          weight: 2.5,
-          opacity: 0.75,
-          dashArray: '2, 4',
+          color: '#FFFFFF',
+          weight: 1.5,
+          opacity: 0.8,
+          dashArray: '3, 4',
           lineCap: 'round',
           lineJoin: 'round'
         }).addTo(map);
@@ -342,18 +338,18 @@ export const AirspaceMap: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-[#060910]">
+    <div className="relative w-full h-full overflow-hidden bg-black font-mono">
       {/* Leaflet DOM container */}
       <div ref={mapContainerRef} className="w-full h-full z-0" />
 
       {/* Subtle Radar Screen Rings Overlay */}
       {showRadarSweep && (
-        <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden opacity-20">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-[#55DDF5]/20" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full border border-[#55DDF5]/20" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full border border-[#55DDF5]/30" />
-          <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-[#55DDF5]/10" />
-          <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-[#55DDF5]/10" />
+        <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden opacity-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-white" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full border border-white" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full border border-white" />
+          <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-white/20" />
+          <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/20" />
         </div>
       )}
 
@@ -362,24 +358,24 @@ export const AirspaceMap: React.FC = () => {
         {/* Reset View Button */}
         <button
           onClick={handleResetView}
-          className="p-2 rounded bg-[#0E1624]/90 hover:bg-[#131F30] border border-[#1C2A3E] hover:border-[#55DDF5]/40 text-[#8293AA] hover:text-[#55DDF5] shadow-lg backdrop-blur transition-all cursor-pointer"
+          className="p-2 rounded bg-[#0A0A0A] hover:bg-[#1A1A1A] border border-[#222222] hover:border-[#444444] text-[#888888] hover:text-white transition-all cursor-pointer"
           title="Reset View to Sector Center"
         >
           <RotateCcw className="w-4 h-4" />
         </button>
 
         {/* Zoom Controls */}
-        <div className="flex flex-col rounded bg-[#0E1624]/90 border border-[#1C2A3E] shadow-lg backdrop-blur overflow-hidden">
+        <div className="flex flex-col rounded bg-[#0A0A0A] border border-[#222222] overflow-hidden">
           <button
             onClick={handleZoomIn}
-            className="p-2 hover:bg-[#131F30] text-[#8293AA] hover:text-[#55DDF5] transition-colors border-b border-[#1C2A3E] cursor-pointer"
+            className="p-2 hover:bg-[#1A1A1A] text-[#888888] hover:text-white transition-colors border-b border-[#222222] cursor-pointer"
             title="Zoom In"
           >
             <ZoomIn className="w-4 h-4" />
           </button>
           <button
             onClick={handleZoomOut}
-            className="p-2 hover:bg-[#131F30] text-[#8293AA] hover:text-[#55DDF5] transition-colors cursor-pointer"
+            className="p-2 hover:bg-[#1A1A1A] text-[#888888] hover:text-white transition-colors cursor-pointer"
             title="Zoom Out"
           >
             <ZoomOut className="w-4 h-4" />
@@ -387,11 +383,11 @@ export const AirspaceMap: React.FC = () => {
         </div>
 
         {/* Toggle Overlays (Radar grid / bounds) */}
-        <div className="flex flex-col rounded bg-[#0E1624]/90 border border-[#1C2A3E] shadow-lg backdrop-blur overflow-hidden">
+        <div className="flex flex-col rounded bg-[#0A0A0A] border border-[#222222] overflow-hidden">
           <button
             onClick={() => setShowRadarSweep(!showRadarSweep)}
-            className={`p-2 transition-colors cursor-pointer border-b border-[#1C2A3E] ${
-              showRadarSweep ? 'text-[#55DDF5] bg-[#131F30]' : 'text-[#8293AA] hover:text-white'
+            className={`p-2 transition-colors cursor-pointer border-b border-[#222222] ${
+              showRadarSweep ? 'text-white bg-[#1A1A1A]' : 'text-[#666666] hover:text-white'
             }`}
             title="Toggle Range Rings"
           >
@@ -400,7 +396,7 @@ export const AirspaceMap: React.FC = () => {
           <button
             onClick={() => setShowSectorBounds(!showSectorBounds)}
             className={`p-2 transition-colors cursor-pointer ${
-              showSectorBounds ? 'text-[#55DDF5] bg-[#131F30]' : 'text-[#8293AA] hover:text-white'
+              showSectorBounds ? 'text-white bg-[#1A1A1A]' : 'text-[#666666] hover:text-white'
             }`}
             title="Toggle Sector Query Bounds"
           >
@@ -410,28 +406,28 @@ export const AirspaceMap: React.FC = () => {
       </div>
 
       {/* Map Legend */}
-      <div className="absolute top-4 right-4 z-20 hidden md:flex items-center gap-3 px-3 py-1.5 rounded bg-[#0E1624]/90 border border-[#1C2A3E] shadow-lg backdrop-blur text-[11px] font-mono">
+      <div className="absolute top-4 right-4 z-20 hidden md:flex items-center gap-3 px-3 py-1.5 rounded bg-[#0A0A0A] border border-[#222222] text-[11px]">
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-sm bg-[#55DDF5]" />
-          <span className="text-[#8293AA]">Airborne</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-white" />
+          <span className="text-[#888888]">Airborne</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-sm bg-[#FFB454]" />
-          <span className="text-[#8293AA]">On Ground</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-[#888888]" />
+          <span className="text-[#888888]">Ground</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-sm bg-[#64748B]" />
-          <span className="text-[#8293AA]">Stale (&gt;60s)</span>
+          <span className="w-2.5 h-2.5 rounded-sm bg-[#444444]" />
+          <span className="text-[#888888]">Stale</span>
         </div>
       </div>
 
       {/* Live Coordinate Display at Bottom Left */}
-      <div className="absolute bottom-3 left-4 z-20 flex items-center gap-2 px-3 py-1 rounded bg-[#0E1624]/90 border border-[#1C2A3E] text-[11px] font-mono text-[#8293AA] backdrop-blur shadow">
-        <Crosshair className="w-3.5 h-3.5 text-[#55DDF5]" />
+      <div className="absolute bottom-3 left-4 z-20 flex items-center gap-2 px-3 py-1 rounded bg-[#0A0A0A] border border-[#222222] text-[11px] text-[#888888]">
+        <Crosshair className="w-3.5 h-3.5 text-white" />
         <span>
           {cursorCoords ? `${cursorCoords.lat.toFixed(4)}°, ${cursorCoords.lon.toFixed(4)}°` : '0.0000°, 0.0000°'}
         </span>
-        <span className="text-[#53647B] border-l border-[#1C2A3E] pl-2">
+        <span className="text-[#555555] border-l border-[#222222] pl-2">
           {selectedRegion.name}
         </span>
       </div>

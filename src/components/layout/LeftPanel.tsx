@@ -59,17 +59,17 @@ export const LeftPanel: React.FC = () => {
   };
 
   return (
-    <aside className="w-80 md:w-84 bg-[#0E1624] border-r border-[#1C2A3E] flex flex-col h-full z-20 shadow-xl overflow-hidden">
+    <aside className="w-80 md:w-84 bg-black border-r border-[#222222] flex flex-col h-full z-20 overflow-hidden font-mono text-xs">
       {/* Sector Operational Metrics Bar */}
-      <div className="p-3 bg-[#131F30]/60 border-b border-[#1C2A3E]">
+      <div className="p-3 bg-[#0A0A0A] border-b border-[#222222]">
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-white uppercase tracking-wider">
-            <Compass className="w-3.5 h-3.5 text-[#55DDF5]" />
+          <div className="flex items-center gap-1.5 text-xs font-bold text-white uppercase tracking-wider">
+            <Compass className="w-3.5 h-3.5 text-white" />
             <span>SECTOR TELEMETRY</span>
           </div>
           <button
             onClick={() => setIsBboxEditorOpen(!isBboxEditorOpen)}
-            className="flex items-center gap-1 text-[10px] font-mono text-[#55DDF5] hover:text-white cursor-pointer"
+            className="flex items-center gap-1 text-[10px] text-[#888888] hover:text-white cursor-pointer"
             title="Edit Bounding Box Coordinates"
           >
             <Edit3 className="w-3 h-3" />
@@ -79,67 +79,67 @@ export const LeftPanel: React.FC = () => {
 
         {/* 4 Metric Tiles */}
         <div className="grid grid-cols-4 gap-1.5 text-center font-mono">
-          <div className="bg-[#080D16] border border-[#1C2A3E] rounded p-1.5">
+          <div className="bg-[#111111] border border-[#222222] rounded p-1.5">
             <div className="text-[14px] font-bold text-white">{totalCount}</div>
-            <div className="text-[8px] text-[#8293AA] uppercase">Total</div>
+            <div className="text-[8px] text-[#666666] uppercase">Total</div>
           </div>
-          <div className="bg-[#080D16] border border-[#1C2A3E] rounded p-1.5">
-            <div className="text-[14px] font-bold text-[#55DDF5]">{airborneCount}</div>
-            <div className="text-[8px] text-[#8293AA] uppercase">Airborne</div>
+          <div className="bg-[#111111] border border-[#222222] rounded p-1.5">
+            <div className="text-[14px] font-bold text-white">{airborneCount}</div>
+            <div className="text-[8px] text-[#666666] uppercase">Airborne</div>
           </div>
-          <div className="bg-[#080D16] border border-[#1C2A3E] rounded p-1.5">
-            <div className="text-[14px] font-bold text-[#FFB454]">{groundCount}</div>
-            <div className="text-[8px] text-[#8293AA] uppercase">Ground</div>
+          <div className="bg-[#111111] border border-[#222222] rounded p-1.5">
+            <div className="text-[14px] font-bold text-[#888888]">{groundCount}</div>
+            <div className="text-[8px] text-[#666666] uppercase">Ground</div>
           </div>
-          <div className="bg-[#080D16] border border-[#1C2A3E] rounded p-1.5">
-            <div className="text-[14px] font-bold text-rose-400">{staleCount}</div>
-            <div className="text-[8px] text-[#8293AA] uppercase">Stale</div>
+          <div className="bg-[#111111] border border-[#222222] rounded p-1.5">
+            <div className="text-[14px] font-bold text-[#666666]">{staleCount}</div>
+            <div className="text-[8px] text-[#666666] uppercase">Stale</div>
           </div>
         </div>
 
         {/* Custom Bounding Box Modal / Accordion */}
         {isBboxEditorOpen && (
-          <form onSubmit={handleApplyCustomBbox} className="mt-3 p-2 bg-[#080D16] border border-[#294262] rounded text-xs font-mono space-y-2">
-            <div className="text-[10px] text-[#8293AA] uppercase font-bold">Bounding Box Coordinates (° Lat / Lon)</div>
+          <form onSubmit={handleApplyCustomBbox} className="mt-3 p-2 bg-[#111111] border border-[#333333] rounded text-xs space-y-2">
+            <div className="text-[10px] text-[#888888] uppercase font-bold">Bounding Box Coordinates (° Lat / Lon)</div>
             <div className="grid grid-cols-2 gap-2 text-[10px]">
               <div>
-                <label className="text-[#8293AA] block">Min Lat (lamin)</label>
+                <label className="text-[#666666] block">Min Lat (lamin)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={bboxValues.lamin}
                   onChange={(e) => setBboxValues({ ...bboxValues, lamin: e.target.value })}
-                  className="w-full bg-[#131F30] border border-[#1C2A3E] rounded p-1 text-white"
+                  className="w-full bg-[#1A1A1A] border border-[#333333] rounded p-1 text-white"
                 />
               </div>
               <div>
-                <label className="text-[#8293AA] block">Max Lat (lamax)</label>
+                <label className="text-[#666666] block">Max Lat (lamax)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={bboxValues.lamax}
                   onChange={(e) => setBboxValues({ ...bboxValues, lamax: e.target.value })}
-                  className="w-full bg-[#131F30] border border-[#1C2A3E] rounded p-1 text-white"
+                  className="w-full bg-[#1A1A1A] border border-[#333333] rounded p-1 text-white"
                 />
               </div>
               <div>
-                <label className="text-[#8293AA] block">Min Lon (lomin)</label>
+                <label className="text-[#666666] block">Min Lon (lomin)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={bboxValues.lomin}
                   onChange={(e) => setBboxValues({ ...bboxValues, lomin: e.target.value })}
-                  className="w-full bg-[#131F30] border border-[#1C2A3E] rounded p-1 text-white"
+                  className="w-full bg-[#1A1A1A] border border-[#333333] rounded p-1 text-white"
                 />
               </div>
               <div>
-                <label className="text-[#8293AA] block">Max Lon (lomax)</label>
+                <label className="text-[#666666] block">Max Lon (lomax)</label>
                 <input
                   type="number"
                   step="0.01"
                   value={bboxValues.lomax}
                   onChange={(e) => setBboxValues({ ...bboxValues, lomax: e.target.value })}
-                  className="w-full bg-[#131F30] border border-[#1C2A3E] rounded p-1 text-white"
+                  className="w-full bg-[#1A1A1A] border border-[#333333] rounded p-1 text-white"
                 />
               </div>
             </div>
@@ -147,13 +147,13 @@ export const LeftPanel: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsBboxEditorOpen(false)}
-                className="px-2 py-1 rounded bg-[#131F30] text-[#8293AA] hover:text-white"
+                className="px-2 py-1 rounded bg-[#1A1A1A] text-[#888888] hover:text-white"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-2.5 py-1 rounded bg-[#55DDF5] text-[#080D16] font-bold hover:bg-[#55DDF5]/90"
+                className="px-2.5 py-1 rounded bg-white text-black font-bold hover:bg-[#E5E5E5]"
               >
                 Apply Bounds
               </button>
@@ -163,14 +163,14 @@ export const LeftPanel: React.FC = () => {
 
         {/* Error Notice if any */}
         {lastErrorMessage && (
-          <div className="mt-2 p-2 rounded bg-rose-950/50 border border-rose-500/40 text-[10px] font-mono text-rose-300 space-y-1.5">
+          <div className="mt-2 p-2 rounded bg-[#161616] border border-[#333333] text-[10px] text-[#CCCCCC] space-y-1.5">
             <div className="flex items-start gap-1.5">
-              <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-rose-400" />
+              <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[#888888]" />
               <span className="leading-tight">{lastErrorMessage}</span>
             </div>
             <button
               onClick={() => setDataMode('DEMO')}
-              className="w-full py-1 rounded bg-[#131F30] hover:bg-[#1C2A3E] border border-[#55DDF5]/40 text-[#55DDF5] font-semibold text-center cursor-pointer transition-colors"
+              className="w-full py-1 rounded bg-[#222222] hover:bg-[#2A2A2A] border border-[#444444] text-white font-medium text-center cursor-pointer transition-colors"
             >
               SWITCH TO DEMO SIMULATION
             </button>
