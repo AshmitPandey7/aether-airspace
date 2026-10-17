@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-base: #080D16;
+    --bg-surface: #0E1624;
+    --bg-elevated: #131F30;
+    --border-subtle: #1C2A3E;
+    --border-bright: #294262;
+    --cyan-accent: #55DDF5;
+    --amber-accent: #FFB454;
+    --green-live: #10B981;
+    --red-alert: #F87171;
+    --text-primary: #EAF1FA;
+    --text-secondary: #8293AA;
+    --text-muted: #53647B;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Monospace for telemetry */
+  .font-mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .font-display {
+    font-family: 'Chakra Petch', 'Inter', sans-serif;
+  }
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080D16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1C2A3E;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2D4363;
+}
+
+/* Leaflet Customizations for Dark Aerospace Console */
+.leaflet-container {
+  background: #060910 !important;
+  font-family: 'Inter', sans-serif !important;
+  outline: none;
+}
+
+.leaflet-bar {
+  border: 1px solid #1C2A3E !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+}
+
+.leaflet-bar a {
+  background-color: #0E1624 !important;
+  color: #8293AA !important;
+  border-bottom: 1px solid #1C2A3E !important;
+  transition: all 0.15s ease;
+}
+
+.leaflet-bar a:hover {
+  background-color: #131F30 !important;
+  color: #55DDF5 !important;
+}
+
+.leaflet-bar a:last-child {
+  border-bottom: none !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(8, 13, 22, 0.85) !important;
+  backdrop-filter: blur(4px);
+  color: #53647B !important;
+  font-size: 10px !important;
+  padding: 2px 8px !important;
+  border-top-left-radius: 4px;
+  border: 1px solid #1C2A3E;
+  border-bottom: none;
+  border-right: none;
+}
+
+.leaflet-control-attribution a {
+  color: #8293AA !important;
+  text-decoration: none;
+}
+
+.leaflet-control-attribution a:hover {
+  color: #55DDF5 !important;
+}
+
+/* Custom Aircraft DivIcon Styling */
+.aircraft-marker-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.aircraft-icon-svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  transition: all 0.2s ease;
+}
+
+.aircraft-marker-selected .aircraft-icon-svg {
+  filter: drop-shadow(0 0 8px rgba(85, 221, 245, 0.85)) drop-shadow(0 0 2px #55DDF5);
+}
+
+.aircraft-selection-ring {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px dashed #55DDF5;
+  animation: radar-spin 6s linear infinite;
+  pointer-events: none;
+}
+
+.aircraft-target-reticle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+}
+
+@keyframes radar-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.97); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2.5s ease-in-out infinite;
+}
+
+/* Radar Sweep Line Effect */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.radar-sweep-beam {
+  transform-origin: center center;
+  animation: radar-sweep 4s linear infinite;
+}
+
+/* Map Tooltip styling */
+.leaflet-tooltip-aircraft {
+  background: rgba(14, 22, 36, 0.95) !important;
+  backdrop-filter: blur(6px);
+  border: 1px solid #294262 !important;
+  border-radius: 4px !important;
+  color: #EAF1FA !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-tooltip-aircraft::before {
+  border-top-color: #294262 !important;
+}
