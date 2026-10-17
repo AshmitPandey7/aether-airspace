@@ -39,6 +39,8 @@ export const AircraftList: React.FC = () => {
     return true;
   });
 
+  const displayedList = filteredList.slice(0, 60);
+
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-[#0E1624]">
       {/* List Header Count */}
@@ -57,7 +59,7 @@ export const AircraftList: React.FC = () => {
             <p>No aircraft matching current filter criteria.</p>
           </div>
         ) : (
-          filteredList.map((ac) => {
+          displayedList.map((ac) => {
             const isSelected = ac.icao24 === selectedIcao24;
             const heading = ac.heading ?? 0;
 
@@ -134,6 +136,11 @@ export const AircraftList: React.FC = () => {
               </div>
             );
           })
+        )}
+        {filteredList.length > 60 && (
+          <div className="p-2.5 text-center text-[10px] text-[#53647B] font-mono bg-[#080D16]/50">
+            Showing top 60 of {filteredList.length} aircraft. Use search to filter specific targets.
+          </div>
         )}
       </div>
     </div>

@@ -12,6 +12,7 @@ import {
   RefreshCw, 
   Settings, 
   SlidersHorizontal,
+  Sparkles,
   WifiOff 
 } from 'lucide-react';
 import { PRESET_REGIONS } from '../../constants/regions';
@@ -79,6 +80,7 @@ export const Header: React.FC = () => {
   };
 
   const navItems: { id: NavSection; label: string; icon: React.ReactNode; badge?: number }[] = [
+    { id: 'home', label: '3D Overview', icon: <Sparkles className="w-4 h-4 text-[#55DDF5]" /> },
     { id: 'airspace', label: 'Live Airspace', icon: <Plane className="w-4 h-4" /> },
     { id: 'history', label: 'Flight History & Replay', icon: <Clock className="w-4 h-4" /> },
     { id: 'alerts', label: 'Sector Alerts', icon: <AlertTriangle className="w-4 h-4" />, badge: unackAlertsCount },
@@ -89,7 +91,11 @@ export const Header: React.FC = () => {
     <header className="h-14 bg-[#0E1624] border-b border-[#1C2A3E] px-4 flex items-center justify-between z-30 select-none relative">
       {/* Brand & Wordmark */}
       <div className="flex items-center gap-6">
-        <div className="flex items-center gap-3">
+        <button 
+          onClick={() => setCurrentSection('home')}
+          className="flex items-center gap-3 cursor-pointer text-left focus:outline-none"
+          title="Return to 3D Overview"
+        >
           <div className="relative w-8 h-8 rounded bg-[#131F30] border border-[#294262] flex items-center justify-center shadow-inner overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(85,221,245,0.2)_0%,transparent_70%)]" />
             <div className="w-4 h-4 rounded-full border border-[#55DDF5]/40 flex items-center justify-center">
@@ -106,10 +112,10 @@ export const Header: React.FC = () => {
               </span>
             </div>
             <p className="text-[10px] font-mono text-[#8293AA] tracking-wider hidden sm:block">
-              AIRSPACE INTELLIGENCE & SURVEILLANCE
+              AIRSPACE INTELLIGENCE &amp; SURVEILLANCE
             </p>
           </div>
-        </div>
+        </button>
 
         {/* Region Selector */}
         <div className="relative">

@@ -33,7 +33,7 @@ export type PositionSource = 'ADS-B' | 'ASTERIX' | 'MLAT' | 'FLARM' | 'UNKNOWN';
 
 export type DataMode = 'LIVE' | 'DELAYED' | 'OFFLINE' | 'DEMO';
 
-export type NavSection = 'airspace' | 'history' | 'alerts' | 'diagnostics';
+export type NavSection = 'home' | 'airspace' | 'history' | 'alerts' | 'diagnostics';
 
 /**
  * Clean, strongly-typed domain model for tracked aircraft

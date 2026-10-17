@@ -4,6 +4,7 @@ import { AircraftInspector } from './components/aircraft/AircraftInspector';
 import { AlertsPanel } from './components/alerts/AlertsPanel';
 import { DiagnosticsPanel } from './components/diagnostics/DiagnosticsPanel';
 import { ReplayController } from './components/history/ReplayController';
+import { HomePage } from './components/home/HomePage';
 import { Header } from './components/layout/Header';
 import { LeftPanel } from './components/layout/LeftPanel';
 import { AirspaceMap } from './components/map/AirspaceMap';
@@ -15,7 +16,6 @@ export const App: React.FC = () => {
     currentSection,
     fetchAirspaceData,
     tickTimer,
-    runDeadReckoningTick,
     selectedIcao24,
     setSelectedIcao24,
     isReplayActive,
@@ -35,16 +35,10 @@ export const App: React.FC = () => {
       tickTimer();
     }, 1000);
 
-    // 1-second dead reckoning estimation tick
-    const deadReckoningInterval = setInterval(() => {
-      runDeadReckoningTick();
-    }, 1000);
-
     return () => {
       clearInterval(pollInterval);
-      clearInterval(deadReckoningInterval);
     };
-  }, [fetchAirspaceData, tickTimer, runDeadReckoningTick]);
+  }, [fetchAirspaceData, tickTimer]);
 
   // Entrance animation on mount
   useEffect(() => {
@@ -77,6 +71,7 @@ export const App: React.FC = () => {
 
       {/* Main Workspace Body */}
       <main className="flex-1 flex overflow-hidden relative">
+        {currentSection === 'home' && <HomePage />}
         {currentSection === 'alerts' && <AlertsPanel />}
         {currentSection === 'diagnostics' && <DiagnosticsPanel />}
 

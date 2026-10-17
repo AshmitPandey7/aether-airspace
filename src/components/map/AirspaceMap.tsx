@@ -209,32 +209,50 @@ export const AirspaceMap: React.FC = () => {
       return true;
     });
 
-    // Render / update markers
+    // Render / update markers with high-performance caching to prevent DOM thrashing
     filteredAircraft.forEach((ac) => {
       currentIcaoSet.add(ac.icao24);
       const isSelected = ac.icao24 === selectedIcao24;
-      const html = createAircraftIconHtml(ac, isSelected);
-
-      const customIcon = L.divIcon({
-        className: 'aircraft-div-icon',
-        html,
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
-      });
+      const iconKey = `${isSelected ? 1 : 0}_${Math.round((ac.heading ?? 0) / 2) * 2}_${ac.onGround ? 1 : 0}_${ac.freshness}`;
 
       let marker = existingMarkers.get(ac.icao24);
 
       if (marker) {
-        // Update existing marker position & icon
-        marker.setLatLng([ac.lat, ac.lon]);
-        marker.setIcon(customIcon);
+        // Update coordinates smoothly without DOM destruction
+        const curLatLng = marker.getLatLng();
+        if (Math.abs(curLatLng.lat - ac.lat) > 0.00001 || Math.abs(curLatLng.lng - ac.lon) > 0.00001) {
+          marker.setLatLng([ac.lat, ac.lon]);
+        }
+
+        // Only recreate DOM icon if visual state (selection, heading, ground, freshness) changed
+        if ((marker as any)._iconKey !== iconKey) {
+          const html = createAircraftIconHtml(ac, isSelected);
+          const customIcon = L.divIcon({
+            className: 'aircraft-div-icon',
+            html,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          });
+          marker.setIcon(customIcon);
+          (marker as any)._iconKey = iconKey;
+        }
+
         marker.setZIndexOffset(isSelected ? 1000 : (ac.onGround ? 10 : 100));
       } else {
         // Create new marker
+        const html = createAircraftIconHtml(ac, isSelected);
+        const customIcon = L.divIcon({
+          className: 'aircraft-div-icon',
+          html,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+
         marker = L.marker([ac.lat, ac.lon], {
           icon: customIcon,
           zIndexOffset: isSelected ? 1000 : (ac.onGround ? 10 : 100)
         });
+        (marker as any)._iconKey = iconKey;
 
         // Hover tooltip
         marker.bindTooltip(`

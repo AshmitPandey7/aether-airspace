@@ -120,7 +120,7 @@ const INITIAL_FILTERS: FilterState = {
 const alertCooldowns = new Map<string, number>();
 
 export const useAirspaceStore = create<AirspaceState>((set, get) => ({
-  currentSection: 'airspace',
+  currentSection: 'home',
   setCurrentSection: (section) => set({ currentSection: section }),
 
   selectedRegion: DEFAULT_REGION,
