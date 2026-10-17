@@ -230,11 +230,11 @@ export const FlightModel3D: React.FC<FlightModel3DProps> = ({ scrollProgress }) 
 
     // Render loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const elapsed = (performance.now() - startTime) / 1000;
       const p = scrollRef.current; // 0 to 1
 
       // KEY FIX: The jet stays perfectly centered on screen!
